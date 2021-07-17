@@ -14,8 +14,8 @@ import com.example.newcovidapp.ui.main.mainDetail.CountryDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), CovidAdapterListener, MainViewInterface {
-    val presenter = MainActivityPresenter(this)
+class MainActivity : AppCompatActivity(), CovidAdapterListener {
+    val viewModel = MainActivityViewModel()
 
     override fun onCountryClick(country: DetailCovidInfoByCountry) {
         val intent = Intent(this@MainActivity, CountryDetailActivity::class.java)
@@ -27,13 +27,31 @@ class MainActivity : AppCompatActivity(), CovidAdapterListener, MainViewInterfac
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter.showAllInfoByCountries()
+        viewModel.showAllInfoByCountries()
+
+        viewModel.allCovidInfoByCountryLiveData.observeForever{
+            showAllCovidInfoByAllCountries(it)
+        }
+        viewModel.countryNameLiveData.observeForever{
+            showAllCountriesName(it)
+        }
+        viewModel.exceptionLiveData.observeForever{
+            showError(it)
+        }
+        viewModel.progresBarLiveData.observeForever(){
+            if(it == true)
+                showProgressBar()
+            else
+                hideProgressBar()
+        }
+
+
     }
 
-   override fun showProgressBar(){
+   fun showProgressBar(){
         progressBar.visibility = View.VISIBLE
     }
-   override fun showAllCovidInfoByAllCountries(getAllInfoCovid: AllCovidInfoByCountries){
+   fun showAllCovidInfoByAllCountries(getAllInfoCovid: AllCovidInfoByCountries){
         allCasesTextView.text = "Случаев всего: ${getAllInfoCovid.cases}"
         allTodayCasesTextView.text = "Случаев сегодня: ${getAllInfoCovid.todayCases}"
         allDeathsTextView.text = "Смертей всего: ${getAllInfoCovid.deaths}"
@@ -41,14 +59,14 @@ class MainActivity : AppCompatActivity(), CovidAdapterListener, MainViewInterfac
         allRecoveredTextView.text = "Выздоравлений всего: ${getAllInfoCovid.recovered}"
         allTodayRecoveredTextView.text = "Выздоравлений сегодня: ${getAllInfoCovid.todayRecovered}"
     }
-   override fun showAllCountriesName(getAllNameCountries: List<DetailCovidInfoByCountry>){
+   fun showAllCountriesName(getAllNameCountries: List<DetailCovidInfoByCountry>){
         val adapter = CovidAdapter(getAllNameCountries, this@MainActivity)
         recyclerViewCountries.adapter = adapter
     }
-   override fun showError(ex: Exception){
+   fun showError(ex: Exception){
         Toast.makeText(this@MainActivity, "Ошибка - ${ex.message}", Toast.LENGTH_LONG).show()
     }
-   override fun hideProgressBar(){
+   fun hideProgressBar(){
         progressBar.visibility = View.INVISIBLE
     }
 }

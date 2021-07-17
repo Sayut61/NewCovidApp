@@ -1,4 +1,6 @@
 package com.example.newcovidapp.ui.main.mainAll
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.newcovidapp.data.AllCovidInfoByCountries
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import com.example.newcovidapp.datasource.service
@@ -7,30 +9,24 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-interface MainViewInterface{
-    fun showProgressBar()
-    fun showAllCovidInfoByAllCountries(getAllInfoCovid: AllCovidInfoByCountries)
-    fun showAllCountriesName(getAllNameCountries: List<DetailCovidInfoByCountry>)
-    fun showError(ex: Exception)
-    fun hideProgressBar()
-}
 
-class MainActivityPresenter(val view: MainViewInterface) {
-
+class MainActivityViewModel: ViewModel() {
+    val allCovidInfoByCountryLiveData = MutableLiveData<AllCovidInfoByCountries>()
+    val countryNameLiveData = MutableLiveData<List<DetailCovidInfoByCountry>>()
+    val exceptionLiveData = MutableLiveData<Exception>()
+    val progresBarLiveData = MutableLiveData<Boolean>()
     fun showAllInfoByCountries(){
         GlobalScope.launch(Dispatchers.Main){
-            view.showProgressBar()
+            progresBarLiveData.value = true
             try {
                 val getAllInfoCovid: AllCovidInfoByCountries = service.getAllInfoByAllCountry()
-                view.showAllCovidInfoByAllCountries(getAllInfoCovid)
-
+                allCovidInfoByCountryLiveData.value = getAllInfoCovid
                 val getAllNameCountries: List<DetailCovidInfoByCountry> = service.getCountryName()
-                view.showAllCountriesName(getAllNameCountries)
-
+                countryNameLiveData.value = getAllNameCountries
             }catch (ex: Exception){
-                view.showError(ex)
+                exceptionLiveData.value = ex
             }
-            view.hideProgressBar()
+            progresBarLiveData.value = false
         }
     }
 }
