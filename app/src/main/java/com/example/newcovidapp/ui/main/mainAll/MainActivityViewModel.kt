@@ -14,21 +14,28 @@ import java.lang.Exception
 class MainActivityViewModel: ViewModel() {
     private val _allCovidInfoByCountryLiveData = MutableLiveData<AllCovidInfoByCountries>()
     val allCovidInfoByCountryLiveData: LiveData<AllCovidInfoByCountries> = _allCovidInfoByCountryLiveData
-    val countryNameLiveData = MutableLiveData<List<DetailCovidInfoByCountry>>()
-    val exceptionLiveData = MutableLiveData<Exception>()
-    val progresBarLiveData = MutableLiveData<Boolean>()
+
+    private val _countryNameLiveData = MutableLiveData<List<DetailCovidInfoByCountry>>()
+    val countryNameLiveData: LiveData<List<DetailCovidInfoByCountry>> = _countryNameLiveData
+
+    private val _exceptionLiveData = MutableLiveData<Exception>()
+    val exceptionLiveData: LiveData<Exception> = _exceptionLiveData
+
+    private val _progresBarLiveData = MutableLiveData<Boolean>()
+    val progresBarLiveData: LiveData<Boolean> = _progresBarLiveData
+
     fun showAllInfoByCountries(){
         GlobalScope.launch(Dispatchers.Main){
-            progresBarLiveData.value = true
+            _progresBarLiveData.value = true
             try {
                 val getAllInfoCovid: AllCovidInfoByCountries = service.getAllInfoByAllCountry()
                 _allCovidInfoByCountryLiveData.value = getAllInfoCovid
                 val getAllNameCountries: List<DetailCovidInfoByCountry> = service.getCountryName()
-                countryNameLiveData.value = getAllNameCountries
+                _countryNameLiveData.value = getAllNameCountries
             }catch (ex: Exception){
-                exceptionLiveData.value = ex
+                _exceptionLiveData.value = ex
             }
-            progresBarLiveData.value = false
+            _progresBarLiveData.value = false
         }
     }
 }

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), CovidAdapterListener {
-    val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
     override fun onCountryClick(country: DetailCovidInfoByCountry) {
         val intent = Intent(this@MainActivity, CountryDetailActivity::class.java)
         intent.putExtra("nameCountry", country.country)

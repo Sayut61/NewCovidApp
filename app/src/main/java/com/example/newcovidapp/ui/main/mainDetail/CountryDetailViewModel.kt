@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class CountryDetailViewModel: ViewModel() {
     private val _detailCovidInfoByCountryLiveData = MutableLiveData<DetailCovidInfoByCountry>()
     val detailCovidInfoByCountryLiveData: LiveData<DetailCovidInfoByCountry> = _detailCovidInfoByCountryLiveData
+
     fun onViewCreated(countryName: String){
         GlobalScope.launch(Dispatchers.Main) {
             val countries = service.getCountryName()
