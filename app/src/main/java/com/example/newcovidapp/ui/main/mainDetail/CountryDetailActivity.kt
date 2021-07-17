@@ -12,11 +12,8 @@ class CountryDetailActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_detail)
-
         val countryName = intent.getStringExtra("nameCountry")
-
         viewModel.onViewCreated(countryName!!)
-
         viewModel.detailCovidInfoByCountryLiveData.observeForever{
             showDetailInfoByCountry(it)
         }

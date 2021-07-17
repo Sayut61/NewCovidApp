@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.newcovidapp.R
 import com.example.newcovidapp.data.AllCovidInfoByCountries
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
@@ -15,37 +16,31 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
 class MainActivity : AppCompatActivity(), CovidAdapterListener {
-    val viewModel = MainActivityViewModel()
-
+    val viewModel: MainActivityViewModel by viewModels()
     override fun onCountryClick(country: DetailCovidInfoByCountry) {
         val intent = Intent(this@MainActivity, CountryDetailActivity::class.java)
         intent.putExtra("nameCountry", country.country)
         startActivity(intent)
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         viewModel.showAllInfoByCountries()
-
-        viewModel.allCovidInfoByCountryLiveData.observeForever{
-            showAllCovidInfoByAllCountries(it)
+        viewModel.allCovidInfoByCountryLiveData.observe(this){allCovidInfo->
+            showAllCovidInfoByAllCountries(allCovidInfo)
         }
-        viewModel.countryNameLiveData.observeForever{
-            showAllCountriesName(it)
+        viewModel.countryNameLiveData.observe(this){allNameCounties->
+            showAllCountriesName(allNameCounties)
         }
-        viewModel.exceptionLiveData.observeForever{
-            showError(it)
+        viewModel.exceptionLiveData.observe(this){exception->
+            showError(exception)
         }
-        viewModel.progresBarLiveData.observeForever(){
-            if(it == true)
+        viewModel.progresBarLiveData.observe(this){progressBar->
+            if(progressBar == true)
                 showProgressBar()
             else
                 hideProgressBar()
         }
-
-
     }
 
    fun showProgressBar(){
