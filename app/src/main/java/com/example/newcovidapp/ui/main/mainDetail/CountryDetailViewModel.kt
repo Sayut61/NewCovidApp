@@ -12,7 +12,7 @@ class CountryDetailViewModel: ViewModel() {
     private val _detailCovidInfoByCountryLiveData = MutableLiveData<DetailCovidInfoByCountry>()
     val detailCovidInfoByCountryLiveData: LiveData<DetailCovidInfoByCountry> = _detailCovidInfoByCountryLiveData
 
-    fun onViewCreated(countryName: String){
+    fun showDetailInfoByCountry(countryName: String){
         GlobalScope.launch(Dispatchers.Main) {
             val countries = service.getCountryName()
             val country = countries.find { it.country == countryName}!!

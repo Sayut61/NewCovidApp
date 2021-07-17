@@ -13,7 +13,7 @@ class CountryDetailActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_detail)
         val countryName = intent.getStringExtra("nameCountry")
-        viewModel.onViewCreated(countryName!!)
+        viewModel.showDetailInfoByCountry(countryName!!)
         viewModel.detailCovidInfoByCountryLiveData.observeForever{
             showDetailInfoByCountry(it)
         }
