@@ -19,13 +19,7 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity(), CovidAdapterListener {
     override fun onCountryClick(country: DetailCovidInfoByCountry) {
         val intent = Intent(this@MainActivity, CountryDetailActivity::class.java)
-        intent.putExtra("name", country.country)
-        intent.putExtra("cases", country.cases)
-        intent.putExtra("todayCases", country.todayCases)
-        intent.putExtra("deaths", country.deaths)
-        intent.putExtra("todayDeaths", country.todayDeaths)
-        intent.putExtra("recovered", country.recovered)
-        intent.putExtra("todayRecovered", country.todayRecovered)
+        intent.putExtra("nameCountry", country.country)
         startActivity(intent)
     }
     override fun onCreate(savedInstanceState: Bundle?) {

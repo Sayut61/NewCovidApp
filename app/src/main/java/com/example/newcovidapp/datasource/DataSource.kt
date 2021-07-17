@@ -13,9 +13,6 @@ interface RestCovidStatisticsAPI {
 
     @GET("countries")
     suspend fun getCountryName(): List<DetailCovidInfoByCountry>
-
-    @GET("countries")
-    suspend fun getDetailInfoByCountry(): DetailCovidInfoByCountry
 }
 
 
