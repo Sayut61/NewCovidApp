@@ -1,4 +1,4 @@
-package com.example.newcovidapp.ui.main.mainDetail
+package com.example.newcovidapp.ui.main.detail_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

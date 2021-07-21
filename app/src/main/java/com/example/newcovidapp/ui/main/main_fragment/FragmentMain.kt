@@ -1,30 +1,32 @@
-package com.example.newcovidapp.ui.main.mainAll
+package com.example.newcovidapp.ui.main.main_fragment
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.example.newcovidapp.R
 import com.example.newcovidapp.data.AllCovidInfoByCountries
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import com.example.newcovidapp.ui.adapters.CovidAdapter
 import com.example.newcovidapp.ui.adapters.CovidAdapterListener
-import com.example.newcovidapp.ui.main.mainDetail.CountryDetailActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), CovidAdapterListener {
-    private val viewModel: MainActivityViewModel by viewModels()
-    override fun onCountryClick(country: DetailCovidInfoByCountry) {
-        val intent = Intent(this@MainActivity, CountryDetailActivity::class.java)
-        intent.putExtra("nameCountry", country.country)
-        startActivity(intent)
+
+class FragmentMain : androidx.fragment.app.Fragment(), CovidAdapterListener {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        val viewModel: MainActivityViewModel by viewModels()
         viewModel.showAllInfoByCountries()
         viewModel.allCovidInfoByCountryLiveData.observe(this){allCovidInfo->
             showAllCovidInfoByAllCountries(allCovidInfo)
@@ -43,10 +45,10 @@ class MainActivity : AppCompatActivity(), CovidAdapterListener {
         }
     }
 
-   fun showProgressBar(){
+    fun showProgressBar(){
         progressBar.visibility = View.VISIBLE
     }
-   fun showAllCovidInfoByAllCountries(getAllInfoCovid: AllCovidInfoByCountries){
+    fun showAllCovidInfoByAllCountries(getAllInfoCovid: AllCovidInfoByCountries){
         allCasesTextView.text = "Случаев всего: ${getAllInfoCovid.cases}"
         allTodayCasesTextView.text = "Случаев сегодня: ${getAllInfoCovid.todayCases}"
         allDeathsTextView.text = "Смертей всего: ${getAllInfoCovid.deaths}"
@@ -54,14 +56,20 @@ class MainActivity : AppCompatActivity(), CovidAdapterListener {
         allRecoveredTextView.text = "Выздоравлений всего: ${getAllInfoCovid.recovered}"
         allTodayRecoveredTextView.text = "Выздоравлений сегодня: ${getAllInfoCovid.todayRecovered}"
     }
-   fun showAllCountriesName(getAllNameCountries: List<DetailCovidInfoByCountry>){
-        val adapter = CovidAdapter(getAllNameCountries, this@MainActivity)
+    fun showAllCountriesName(getAllNameCountries: List<DetailCovidInfoByCountry>){
+        val adapter = CovidAdapter(getAllNameCountries, R.layout.fragment_main)
         recyclerViewCountries.adapter = adapter
     }
-   fun showError(ex: Exception){
-        Toast.makeText(this@MainActivity, "Ошибка - ${ex.message}", Toast.LENGTH_LONG).show()
+    fun showError(ex: Exception){
+        Toast.makeText(requireContext(), "Ошибка - ${ex.message}", Toast.LENGTH_LONG).show()
     }
-   fun hideProgressBar(){
+    fun hideProgressBar(){
         progressBar.visibility = View.INVISIBLE
+    }
+
+    override fun onCountryClick(country: DetailCovidInfoByCountry) {
+        val intent = Intent()
+        intent.putExtra("nameCountry", country.country)
+        startActivity(intent)
     }
 }

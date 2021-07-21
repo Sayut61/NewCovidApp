@@ -1,18 +1,28 @@
-package com.example.newcovidapp.ui.main.mainDetail
+package com.example.newcovidapp.ui.main.detail_fragment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.example.newcovidapp.R
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
-import kotlinx.android.synthetic.main.activity_country_detail.*
+import kotlinx.android.synthetic.main.fragment_detail.*
 
-class CountryDetailActivity : AppCompatActivity(){
-    private val viewModel: CountryDetailViewModel by viewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_country_detail)
-        val countryName = intent.getStringExtra("nameCountry")
+
+class FragmentDetail : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_detail, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val viewModel: CountryDetailViewModel by viewModels()
+        setContentView(R.layout.fragment_detail)
+        val countryName = arguments?.getString("nameCountry")
         viewModel.showDetailInfoByCountry(countryName!!)
         viewModel.detailCovidInfoByCountryLiveData.observeForever{
             showDetailInfoByCountry(it)
