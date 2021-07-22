@@ -21,7 +21,6 @@ class FragmentDetail : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val viewModel: CountryDetailViewModel by viewModels()
-        setContentView(R.layout.fragment_detail)
         val countryName = arguments?.getString("nameCountry")
         viewModel.showDetailInfoByCountry(countryName!!)
         viewModel.detailCovidInfoByCountryLiveData.observeForever{

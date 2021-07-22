@@ -57,7 +57,7 @@ class FragmentMain : androidx.fragment.app.Fragment(), CovidAdapterListener {
         allTodayRecoveredTextView.text = "Выздоравлений сегодня: ${getAllInfoCovid.todayRecovered}"
     }
     fun showAllCountriesName(getAllNameCountries: List<DetailCovidInfoByCountry>){
-        val adapter = CovidAdapter(getAllNameCountries, R.layout.fragment_main)
+        val adapter = CovidAdapter(getAllNameCountries, this)
         recyclerViewCountries.adapter = adapter
     }
     fun showError(ex: Exception){
