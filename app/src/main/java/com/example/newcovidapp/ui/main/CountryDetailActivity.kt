@@ -22,7 +22,7 @@ class CountryDetailActivity : AppCompatActivity() {
             val country = countries.find { it.country == countryName}!!
             
             detailNameCountryTextView.text = countryName
-            detailCasesTextView.text = "Случаев всего: ${country.cases}"
+            detailCasesTextView.text = "Случаев всeего: ${country.cases}"
             detailTodayCasesTextView.text = "Случаев сегодня: ${country.todayCases}"
             detailDeathsTextView.text = "Смертей всего: ${country.deaths}"
             detailTodayDeathsTextView.text = "Смертей сегодня: ${country.todayDeaths}"
