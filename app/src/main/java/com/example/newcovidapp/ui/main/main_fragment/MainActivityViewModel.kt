@@ -21,12 +21,12 @@ class MainActivityViewModel: ViewModel() {
     private val _exceptionLiveData = MutableLiveData<Exception>()
     val exceptionLiveData: LiveData<Exception> = _exceptionLiveData
 
-    private val _progresBarLiveData = MutableLiveData<Boolean>()
-    val progresBarLiveData: LiveData<Boolean> = _progresBarLiveData
+    private val _progressBarLiveData = MutableLiveData<Boolean>()
+    val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
 
     fun showAllInfoByCountries(){
         GlobalScope.launch(Dispatchers.Main){
-            _progresBarLiveData.value = true
+            _progressBarLiveData.value = true
             try {
                 val getAllInfoCovid: AllCovidInfoByCountries = service.getAllInfoByAllCountry()
                 _allCovidInfoByCountryLiveData.value = getAllInfoCovid
@@ -35,7 +35,7 @@ class MainActivityViewModel: ViewModel() {
             }catch (ex: Exception){
                 _exceptionLiveData.value = ex
             }
-            _progresBarLiveData.value = false
+            _progressBarLiveData.value = false
         }
     }
 }
