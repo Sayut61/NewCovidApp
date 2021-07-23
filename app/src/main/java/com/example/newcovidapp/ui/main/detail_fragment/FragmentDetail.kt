@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 
 
 class FragmentDetail : Fragment() {
-    val args: FragmentDetailArgs by navArgs()
+    private val args: FragmentDetailArgs by navArgs()
 
-    val viewModel: CountryDetailViewModel by viewModels()
+    private val viewModel: CountryDetailViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false)
