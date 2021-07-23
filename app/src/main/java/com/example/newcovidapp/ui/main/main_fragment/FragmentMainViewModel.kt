@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
-class MainActivityViewModel: ViewModel() {
+class FragmentMainViewModel: ViewModel() {
     private val _allCovidInfoByCountryLiveData = MutableLiveData<AllCovidInfoByCountries>()
     val allCovidInfoByCountryLiveData: LiveData<AllCovidInfoByCountries> = _allCovidInfoByCountryLiveData
 
