@@ -43,7 +43,6 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentMap"
-        android:name="com.example.newcovidapp.Map"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        android:name="com.example.newcovidapp.ui.main.map.FragmentMap"
+        android:label="fragment_map" />
 </navigation>

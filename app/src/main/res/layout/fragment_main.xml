@@ -79,8 +79,6 @@
         android:layout_marginTop="8dp"
         android:text="СПИСОК СТРАН"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/allTodayRecoveredTextView" />
 
@@ -119,4 +117,51 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/sortTypeChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewCountries"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/byNameChip"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="by name"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/byCasesChip"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="by cases"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:entries="@array/sorted_types"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/refreshButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/sortTypeChipGroup"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SearchView
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/refreshButton"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.newcovidapp.R
 import com.example.newcovidapp.data.AllCovidInfoByCountries
@@ -16,7 +16,6 @@ import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import com.example.newcovidapp.ui.adapters.CovidAdapter
 import com.example.newcovidapp.ui.adapters.CovidAdapterListener
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
@@ -35,7 +34,7 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         viewModel.allCovidInfoByCountryLiveData.observe(viewLifecycleOwner) { allCovidInfo ->
             showAllCovidInfoByAllCountries(allCovidInfo)
         }
-        viewModel.countryNameLiveData.observe(viewLifecycleOwner) { allNameCounties ->
+        viewModel.countriesInfoLiveData.observe(viewLifecycleOwner) { allNameCounties ->
             showAllCountriesName(allNameCounties)
         }
         viewModel.exceptionLiveData.observe(viewLifecycleOwner) { exception ->
@@ -44,6 +43,44 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         viewModel.progressBarLiveData.observe(viewLifecycleOwner) { progressBar ->
             if (progressBar == true) showProgressBar()
             else hideProgressBar()
+        }
+
+        /*sortTypeChipGroup.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.byNameChip ->{
+                    viewModel.changeSortType(FragmentMainViewModel.SortType.BY_NAME)
+                }
+                R.id.byCasesChip ->{
+                    viewModel.changeSortType(FragmentMainViewModel.SortType.BY_CASES)
+                }
+            }
+        }*/
+
+        refreshButton.setOnClickListener {
+            viewModel.showAllInfoByCountries()
+        }
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when(position){
+                    0 ->{
+                        viewModel.changeSortType(FragmentMainViewModel.SortType.BY_NAME)
+                    }
+                    1 ->{
+                        viewModel.changeSortType(FragmentMainViewModel.SortType.BY_CASES)
+                    }
+                }
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
         }
     }
     private fun showProgressBar() {
