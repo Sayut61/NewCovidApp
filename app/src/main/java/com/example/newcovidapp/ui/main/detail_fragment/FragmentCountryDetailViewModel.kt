@@ -15,6 +15,9 @@ class FragmentCountryDetailViewModel: ViewModel() {
     private val _progressBarLiveData = MutableLiveData<Boolean>()
     val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
 
+    private val _showExceptionLiveData = MutableLiveData<Exception>()
+    val showExceptionLiveData: LiveData<Exception> = _showExceptionLiveData
+
     fun showDetailInfoByCountry(countryName: String){
         GlobalScope.launch(Dispatchers.Main) {
             _progressBarLiveData.value = true
@@ -23,7 +26,7 @@ class FragmentCountryDetailViewModel: ViewModel() {
                 val country = countries.find { it.country == countryName }!!
                 _detailCovidInfoByCountryLiveData.value = country
             }catch (ex: Exception){
-
+                _showExceptionLiveData.value = ex
             }
             _progressBarLiveData.value = false
         }

@@ -3,12 +3,14 @@ package com.example.newcovidapp.ui.main.detail_fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.newcovidapp.R
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import kotlinx.android.synthetic.main.fragment_detail.*
+import java.lang.reflect.Executable
 
 
 class FragmentDetail : Fragment() {
@@ -32,6 +34,9 @@ class FragmentDetail : Fragment() {
             if(progressBar2 == true) showProgressBar()
             else hideProgressBar()
         }
+        viewModel.showExceptionLiveData.observe(viewLifecycleOwner){exception->
+            showError(exception)
+        }
     }
     @SuppressLint("SetTextI18n")
     private fun showDetailInfoByCountry(country: DetailCovidInfoByCountry){
@@ -42,6 +47,9 @@ class FragmentDetail : Fragment() {
         detailTodayDeathsTextView.text = "Смертей сегодня: ${country.todayDeaths}"
         detailRecoveredTextView.text = "Выздоровлений всего: ${country.recovered}"
         detailTodayRecoveredTextView.text = "Выздоровлений сегодня: ${country.todayRecovered}"
+    }
+    fun showError(ex:Exception){
+        Toast.makeText(requireContext(), "Ошибка - ${ex.message}", Toast.LENGTH_LONG).show()
     }
 
     fun showProgressBar(){
