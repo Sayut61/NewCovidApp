@@ -2,9 +2,7 @@ package com.example.newcovidapp.ui.main.main_fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,12 +14,14 @@ import com.example.newcovidapp.ui.adapters.CovidAdapter
 import com.example.newcovidapp.ui.adapters.CovidAdapterListener
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.lang.Exception
+import java.util.zip.Inflater
 
 
 class FragmentMain : Fragment(), CovidAdapterListener {
     private val viewModel: FragmentMainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         viewModel.exceptionLiveData.observe(viewLifecycleOwner){exception->
             showError(exception)
         }
-        viewModel.progressBarLiveData.observe(viewLifecycleOwner){ progressBar->
+        viewModel.progressBarLiveData.observe(viewLifecycleOwner){progressBar->
             if(progressBar == true) showProgressBar()
             else hideProgressBar()
         }
@@ -69,4 +69,18 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         country.deaths, country.todayDeaths, country.recovered, country.todayRecovered)
         findNavController().navigate(action)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.refresh -> {
+                viewModel.showAllInfoByCountries()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

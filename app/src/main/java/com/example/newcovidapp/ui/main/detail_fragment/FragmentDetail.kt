@@ -2,10 +2,8 @@ package com.example.newcovidapp.ui.main.detail_fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.newcovidapp.R
@@ -15,8 +13,8 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 
 class FragmentDetail : Fragment() {
     private val args: FragmentDetailArgs by navArgs()
-
     private val viewModel: FragmentCountryDetailViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail, container, false)
@@ -40,4 +38,18 @@ class FragmentDetail : Fragment() {
         detailRecoveredTextView.text = "Выздоровлений всего: ${country.recovered}"
         detailTodayRecoveredTextView.text = "Выздоровлений сегодня: ${country.todayRecovered}"
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.top_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onContextItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId){
+//            R.id.refresh ->{
+//                viewModel.showDetailInfoByCountry(countryName = String())
+//            }
+//        }
+//        return super.onContextItemSelected(item)
+//    }
 }

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/fragmentMain"
         android:name="com.example.newcovidapp.ui.main.main_fragment.FragmentMain"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="Основная информация"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_fragmentMain_to_fragmentDetail"
             app:destination="@id/fragmentDetail" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/fragmentDetail"
         android:name="com.example.newcovidapp.ui.main.detail_fragment.FragmentDetail"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        android:label="Детальная информация"
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="country"
             app:argType="string" />
@@ -44,6 +44,6 @@
     <fragment
         android:id="@+id/fragmentMap"
         android:name="com.example.newcovidapp.ui.main.map_fragment.FragmentMap"
-        android:label="fragment_map"
+        android:label="Мапа"
         tools:layout="@layout/fragment_map" />
 </navigation>

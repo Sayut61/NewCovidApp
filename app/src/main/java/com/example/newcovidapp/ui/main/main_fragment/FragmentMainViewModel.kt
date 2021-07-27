@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
-class FragmentMainViewModel: ViewModel() {
+open class FragmentMainViewModel: ViewModel() {
     private val _allCovidInfoByCountryLiveData = MutableLiveData<AllCovidInfoByCountries>()
     val allCovidInfoByCountryLiveData: LiveData<AllCovidInfoByCountries> = _allCovidInfoByCountryLiveData
 
@@ -38,4 +38,5 @@ class FragmentMainViewModel: ViewModel() {
             _progressBarLiveData.value = false
         }
     }
+
 }
