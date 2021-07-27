@@ -17,6 +17,7 @@ class FragmentDetail : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,6 +27,10 @@ class FragmentDetail : Fragment() {
         viewModel.showDetailInfoByCountry(countryName)
         viewModel.detailCovidInfoByCountryLiveData.observeForever{
             showDetailInfoByCountry(it)
+        }
+        viewModel.progressBarLiveData.observe(viewLifecycleOwner){progressBar2->
+            if(progressBar2 == true) showProgressBar()
+            else hideProgressBar()
         }
     }
     @SuppressLint("SetTextI18n")
@@ -39,17 +44,24 @@ class FragmentDetail : Fragment() {
         detailTodayRecoveredTextView.text = "Выздоровлений сегодня: ${country.todayRecovered}"
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.top_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onContextItemSelected(item: MenuItem): Boolean {
-//        when(item.itemId){
-//            R.id.refresh ->{
-//                viewModel.showDetailInfoByCountry(countryName = String())
-//            }
-//        }
-//        return super.onContextItemSelected(item)
-//    }
+    fun showProgressBar(){
+        progressBar2.visibility = View.VISIBLE
+    }
+    fun hideProgressBar(){
+        progressBar2.visibility = View.INVISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.top_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.refresh -> {
+                viewModel.showDetailInfoByCountry(countryName = String())
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

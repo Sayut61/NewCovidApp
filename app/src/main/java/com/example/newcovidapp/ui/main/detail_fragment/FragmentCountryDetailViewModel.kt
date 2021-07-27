@@ -12,11 +12,20 @@ class FragmentCountryDetailViewModel: ViewModel() {
     private val _detailCovidInfoByCountryLiveData = MutableLiveData<DetailCovidInfoByCountry>()
     val detailCovidInfoByCountryLiveData: LiveData<DetailCovidInfoByCountry> = _detailCovidInfoByCountryLiveData
 
+    private val _progressBarLiveData = MutableLiveData<Boolean>()
+    val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
+
     fun showDetailInfoByCountry(countryName: String){
         GlobalScope.launch(Dispatchers.Main) {
-            val countries = service.getCountryName()
-            val country = countries.find { it.country == countryName}!!
-            _detailCovidInfoByCountryLiveData.value = country
+            _progressBarLiveData.value = true
+            try {
+                val countries = service.getCountryName()
+                val country = countries.find { it.country == countryName }!!
+                _detailCovidInfoByCountryLiveData.value = country
+            }catch (ex: Exception){
+
+            }
+            _progressBarLiveData.value = false
         }
     }
 }
