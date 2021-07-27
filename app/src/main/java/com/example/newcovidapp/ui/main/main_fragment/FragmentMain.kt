@@ -3,6 +3,7 @@ package com.example.newcovidapp.ui.main.main_fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +13,7 @@ import com.example.newcovidapp.data.AllCovidInfoByCountries
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import com.example.newcovidapp.ui.adapters.CovidAdapter
 import com.example.newcovidapp.ui.adapters.CovidAdapterListener
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.lang.Exception
 import java.util.zip.Inflater
@@ -72,6 +74,7 @@ class FragmentMain : Fragment(), CovidAdapterListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_menu, menu)
+        val item: MenuItem = menu.findItem(R.id.app_bar_search)
         super.onCreateOptionsMenu(menu, inflater)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -82,5 +85,4 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         }
         return super.onOptionsItemSelected(item)
     }
-
 }
