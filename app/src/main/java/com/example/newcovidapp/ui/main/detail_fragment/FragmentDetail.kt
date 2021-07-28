@@ -38,7 +38,7 @@ class FragmentDetail : Fragment() {
             showError(exception)
         }
     }
-    @SuppressLint("SetTextI18n")
+
     private fun showDetailInfoByCountry(country: DetailCovidInfoByCountry){
         detailNameCountryTextView.text = country.country
         detailCasesTextView.text = "Случаев всего: ${country.cases}"

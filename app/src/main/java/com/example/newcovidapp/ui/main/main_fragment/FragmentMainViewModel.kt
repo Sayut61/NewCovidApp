@@ -2,6 +2,7 @@ package com.example.newcovidapp.ui.main.main_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.newcovidapp.data.AllCovidInfoByCountries
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import com.example.newcovidapp.datasource.service
@@ -25,7 +26,7 @@ open class FragmentMainViewModel: ViewModel() {
     val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
 
     fun showAllInfoByCountries(){
-        GlobalScope.launch(Dispatchers.Main){
+        viewModelScope.launch(Dispatchers.Main){
             _progressBarLiveData.value = true
             try {
                 val getAllInfoCovid: AllCovidInfoByCountries = service.getAllInfoByAllCountry()
