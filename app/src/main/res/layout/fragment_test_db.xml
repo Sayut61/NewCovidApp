@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.map_fragment.FragmentTestDB">
+
+
+    <EditText
+        android:id="@+id/countryNameEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/countryCasesEditTExt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryNameEditText" />
+
+    <Button
+        android:id="@+id/insertToDBButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INSERT TO DB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countryCasesEditTExt" />
+
+    <Button
+        android:id="@+id/loadFromDBButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LOAD FROM  DB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/insertToDBButton" />
+
+    <TextView
+        android:id="@+id/countriesInfoFromDBtextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadFromDBButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

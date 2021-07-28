@@ -1,6 +1,11 @@
 package com.example.newcovidapp.data
 
-class DetailCovidInfoByCountry(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "countriesInfo")
+data class DetailCovidInfoByCountry(
+    @PrimaryKey
     val country: String,
     val cases: Long,
     val todayCases: Long,
