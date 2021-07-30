@@ -43,6 +43,17 @@ class FragmentMain : Fragment(), CovidAdapterListener {
             if(progressBar == true) showProgressBar()
             else hideProgressBar()
         }
+
+        searchWiev.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filterByCountry(type = String())
+                return true
+            }
+        })
     }
     private fun showProgressBar(){
         progressBar.visibility = View.VISIBLE
@@ -74,7 +85,6 @@ class FragmentMain : Fragment(), CovidAdapterListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_menu, menu)
-        val item: MenuItem = menu.findItem(R.id.app_bar_search)
         super.onCreateOptionsMenu(menu, inflater)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,4 +95,6 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
