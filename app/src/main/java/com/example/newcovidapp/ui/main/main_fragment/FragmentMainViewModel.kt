@@ -24,13 +24,13 @@ open class FragmentMainViewModel: ViewModel() {
     private val _progressBarLiveData = MutableLiveData<Boolean>()
     val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
 
-    fun filterByCountry(type: String){
+    fun filterByCountry(filterText: String){
         val unfiltered = _countryNameLiveData.value
-        if (unfiltered != null) {
-            val filtered = unfiltered.filter { it.country == type}
-            _countryNameLiveData.value = filtered
-        }
+        val filtered = unfiltered?.filter { it.country.startsWith(filterText, true)}
+        _countryNameLiveData.value = filtered
+
     }
+
     fun showAllInfoByCountries(){
         GlobalScope.launch(Dispatchers.Main){
             _progressBarLiveData.value = true

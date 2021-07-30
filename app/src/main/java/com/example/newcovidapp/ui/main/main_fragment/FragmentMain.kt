@@ -42,18 +42,14 @@ class FragmentMain : Fragment(), CovidAdapterListener {
             else hideProgressBar()
         }
 
-        searchWiev.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
+        searchViewView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean { return true }
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
                     viewModel.filterByCountry(newText)
                 }
-                return true
-            }
-        })
+                return true }})
+
     }
     private fun showProgressBar(){
         progressBar.visibility = View.VISIBLE
