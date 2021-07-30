@@ -1,0 +1,188 @@
+Index: app/src/main/java/com/example/newcovidapp/ui/main/detail_fragment/FragmentCountryDetailViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/newcovidapp/ui/main/detail_fragment/FragmentCountryDetailViewModel.kt	(revision 9c1ebe1bb32ca5395782fdf36b55f61e54c02085)
++++ app/src/main/java/com/example/newcovidapp/ui/main/detail_fragment/FragmentCountryDetailViewModel.kt	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -15,6 +15,9 @@
+     private val _progressBarLiveData = MutableLiveData<Boolean>()
+     val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
+ 
++    private val _showExceptionLiveData = MutableLiveData<Exception>()
++    val showExceptionLiveData: LiveData<Exception> = _showExceptionLiveData
++
+     fun showDetailInfoByCountry(countryName: String){
+         GlobalScope.launch(Dispatchers.Main) {
+             _progressBarLiveData.value = true
+@@ -23,7 +26,7 @@
+                 val country = countries.find { it.country == countryName }!!
+                 _detailCovidInfoByCountryLiveData.value = country
+             }catch (ex: Exception){
+-
++                _showExceptionLiveData.value = ex
+             }
+             _progressBarLiveData.value = false
+         }
+Index: app/src/main/java/com/example/newcovidapp/ui/main/detail_fragment/FragmentDetail.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/newcovidapp/ui/main/detail_fragment/FragmentDetail.kt	(revision 9c1ebe1bb32ca5395782fdf36b55f61e54c02085)
++++ app/src/main/java/com/example/newcovidapp/ui/main/detail_fragment/FragmentDetail.kt	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -3,12 +3,14 @@
+ import android.annotation.SuppressLint
+ import android.os.Bundle
+ import android.view.*
++import android.widget.Toast
+ import androidx.fragment.app.Fragment
+ import androidx.fragment.app.viewModels
+ import androidx.navigation.fragment.navArgs
+ import com.example.newcovidapp.R
+ import com.example.newcovidapp.data.DetailCovidInfoByCountry
+ import kotlinx.android.synthetic.main.fragment_detail.*
++import java.lang.reflect.Executable
+ 
+ 
+ class FragmentDetail : Fragment() {
+@@ -32,6 +34,9 @@
+             if(progressBar2 == true) showProgressBar()
+             else hideProgressBar()
+         }
++        viewModel.showExceptionLiveData.observe(viewLifecycleOwner){exception->
++            showError(exception)
++        }
+     }
+     @SuppressLint("SetTextI18n")
+     private fun showDetailInfoByCountry(country: DetailCovidInfoByCountry){
+@@ -43,6 +48,9 @@
+         detailRecoveredTextView.text = "Выздоровлений всего: ${country.recovered}"
+         detailTodayRecoveredTextView.text = "Выздоровлений сегодня: ${country.todayRecovered}"
+     }
++    fun showError(ex:Exception){
++        Toast.makeText(requireContext(), "Ошибка - ${ex.message}", Toast.LENGTH_LONG).show()
++    }
+ 
+     fun showProgressBar(){
+         progressBar2.visibility = View.VISIBLE
+Index: app/src/main/java/com/example/newcovidapp/ui/main/main_fragment/FragmentMain.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/newcovidapp/ui/main/main_fragment/FragmentMain.kt	(revision 9c1ebe1bb32ca5395782fdf36b55f61e54c02085)
++++ app/src/main/java/com/example/newcovidapp/ui/main/main_fragment/FragmentMain.kt	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -3,6 +3,7 @@
+ import android.annotation.SuppressLint
+ import android.os.Bundle
+ import android.view.*
++import android.widget.SearchView
+ import android.widget.Toast
+ import androidx.fragment.app.Fragment
+ import androidx.fragment.app.viewModels
+@@ -12,6 +13,7 @@
+ import com.example.newcovidapp.data.DetailCovidInfoByCountry
+ import com.example.newcovidapp.ui.adapters.CovidAdapter
+ import com.example.newcovidapp.ui.adapters.CovidAdapterListener
++import kotlinx.android.synthetic.*
+ import kotlinx.android.synthetic.main.fragment_main.*
+ import java.lang.Exception
+ import java.util.zip.Inflater
+@@ -72,6 +74,7 @@
+ 
+     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+         inflater.inflate(R.menu.top_menu, menu)
++        val item: MenuItem = menu.findItem(R.id.app_bar_search)
+         super.onCreateOptionsMenu(menu, inflater)
+     }
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+@@ -82,5 +85,4 @@
+         }
+         return super.onOptionsItemSelected(item)
+     }
+-
+ }
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_baseline_search_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_baseline_search_24.xml	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
++++ app/src/main/res/drawable/ic_baseline_search_24.xml	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="?attr/colorControlNormal">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M15.5,14h-0.79l-0.28,-0.27C15.41,12.59 16,11.11 16,9.5 16,5.91 13.09,3 9.5,3S3,5.91 3,9.5 5.91,16 9.5,16c1.61,0 3.09,-0.59 4.23,-1.57l0.27,0.28v0.79l5,4.99L20.49,19l-4.99,-5zM9.5,14C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5 14,7.01 14,9.5 11.99,14 9.5,14z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_search_black_24dp.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable/ic_search_black_24dp.xml	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
++++ app/src/main/res/drawable/ic_search_black_24dp.xml	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++        android:width="24dp"
++        android:height="24dp"
++        android:viewportWidth="24.0"
++        android:viewportHeight="24.0">
++    <path
++        android:fillColor="#FF000000"
++        android:pathData="M15.5,14h-0.79l-0.28,-0.27C15.41,12.59 16,11.11 16,9.5 16,5.91 13.09,3 9.5,3S3,5.91 3,9.5 5.91,16 9.5,16c1.61,0 3.09,-0.59 4.23,-1.57l0.27,0.28v0.79l5,4.99L20.49,19l-4.99,-5zM9.5,14C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5 14,7.01 14,9.5 11.99,14 9.5,14z"/>
++</vector>
+Index: app/src/main/res/layout/fragment_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_main.xml	(revision 9c1ebe1bb32ca5395782fdf36b55f61e54c02085)
++++ app/src/main/res/layout/fragment_main.xml	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -76,11 +76,10 @@
+         android:id="@+id/textView7"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginTop="8dp"
++        android:layout_marginStart="16dp"
++        android:layout_marginTop="12dp"
+         android:text="СПИСОК СТРАН"
+         android:textSize="20sp"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.5"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/allTodayRecoveredTextView" />
+ 
+@@ -119,4 +118,5 @@
+         app:layout_constraintHorizontal_bias="0.5"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
++
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/menu/top_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/top_menu.xml	(revision 9c1ebe1bb32ca5395782fdf36b55f61e54c02085)
++++ app/src/main/res/menu/top_menu.xml	(revision 6d1f19d12c1e8bfad50896bef96227f112542b96)
+@@ -6,4 +6,10 @@
+         android:id="@+id/refresh"
+         android:icon="@drawable/ic_baseline_refresh_24"
+         app:showAsAction="always" />
++    <item
++        android:id="@+id/app_bar_search"
++        android:icon="@drawable/ic_baseline_search_24"
++        android:title="Search"
++        app:actionViewClass="android.widget.SearchView"
++        app:showAsAction="always" />
+ </menu>
+\ No newline at end of file
