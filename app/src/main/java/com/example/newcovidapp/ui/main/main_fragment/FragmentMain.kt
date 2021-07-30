@@ -13,10 +13,8 @@ import com.example.newcovidapp.data.AllCovidInfoByCountries
 import com.example.newcovidapp.data.DetailCovidInfoByCountry
 import com.example.newcovidapp.ui.adapters.CovidAdapter
 import com.example.newcovidapp.ui.adapters.CovidAdapterListener
-import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.lang.Exception
-import java.util.zip.Inflater
 
 
 class FragmentMain : Fragment(), CovidAdapterListener {
@@ -50,7 +48,9 @@ class FragmentMain : Fragment(), CovidAdapterListener {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                viewModel.filterByCountry(type = String())
+                if (newText != null) {
+                    viewModel.filterByCountry(newText)
+                }
                 return true
             }
         })
