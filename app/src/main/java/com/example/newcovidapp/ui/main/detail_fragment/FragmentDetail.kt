@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.newcovidapp.R
-import com.example.newcovidapp.data.DetailCovidInfoByCountry
+import com.example.newcovidapp.data.CountryCovidInfo
 import kotlinx.android.synthetic.main.fragment_detail.*
-import java.lang.reflect.Executable
 
 
 class FragmentDetail : Fragment() {
@@ -27,7 +26,7 @@ class FragmentDetail : Fragment() {
 
         val countryName = args.country
         viewModel.showDetailInfoByCountry(countryName)
-        viewModel.detailCovidInfoByCountryLiveData.observeForever{
+        viewModel.detailCountryCovidInfoLiveData.observeForever{
             showDetailInfoByCountry(it)
         }
         viewModel.progressBarLiveData.observe(viewLifecycleOwner){progressBar2->
@@ -39,14 +38,14 @@ class FragmentDetail : Fragment() {
         }
     }
     @SuppressLint("SetTextI18n")
-    private fun showDetailInfoByCountry(country: DetailCovidInfoByCountry){
-        detailNameCountryTextView.text = country.country
-        detailCasesTextView.text = "Случаев всего: ${country.cases}"
-        detailTodayCasesTextView.text = "Случаев сегодня: ${country.todayCases}"
-        detailDeathsTextView.text = "Смертей всего: ${country.deaths}"
-        detailTodayDeathsTextView.text = "Смертей сегодня: ${country.todayDeaths}"
-        detailRecoveredTextView.text = "Выздоровлений всего: ${country.recovered}"
-        detailTodayRecoveredTextView.text = "Выздоровлений сегодня: ${country.todayRecovered}"
+    private fun showDetailInfoByCountry(countryCovidInfo: CountryCovidInfo){
+        detailNameCountryTextView.text = countryCovidInfo.country
+        detailCasesTextView.text = "Случаев всего: ${countryCovidInfo.cases}"
+        detailTodayCasesTextView.text = "Случаев сегодня: ${countryCovidInfo.todayCases}"
+        detailDeathsTextView.text = "Смертей всего: ${countryCovidInfo.deaths}"
+        detailTodayDeathsTextView.text = "Смертей сегодня: ${countryCovidInfo.todayDeaths}"
+        detailRecoveredTextView.text = "Выздоровлений всего: ${countryCovidInfo.recovered}"
+        detailTodayRecoveredTextView.text = "Выздоровлений сегодня: ${countryCovidInfo.todayRecovered}"
     }
     fun showError(ex:Exception){
         Toast.makeText(requireContext(), "Ошибка - ${ex.message}", Toast.LENGTH_LONG).show()

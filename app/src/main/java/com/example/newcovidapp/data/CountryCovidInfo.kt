@@ -1,6 +1,6 @@
 package com.example.newcovidapp.data
 
-class DetailCovidInfoByCountry(
+class CountryCovidInfo(
     val country: String,
     val cases: Long,
     val todayCases: Long,

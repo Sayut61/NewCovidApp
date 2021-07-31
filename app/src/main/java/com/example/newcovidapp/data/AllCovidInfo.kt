@@ -1,6 +1,6 @@
 package com.example.newcovidapp.data
 
-class AllCovidInfoByCountries(
+class AllCovidInfo(
     val cases: Long,
     val todayCases: Long,
     val deaths: Long,

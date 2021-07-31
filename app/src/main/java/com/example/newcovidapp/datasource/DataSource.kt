@@ -1,7 +1,7 @@
 package com.example.newcovidapp.datasource
 
-import com.example.newcovidapp.data.AllCovidInfoByCountries
-import com.example.newcovidapp.data.DetailCovidInfoByCountry
+import com.example.newcovidapp.data.AllCovidInfo
+import com.example.newcovidapp.data.CountryCovidInfo
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -9,10 +9,10 @@ import retrofit2.http.GET
 
 interface RestCovidStatisticsAPI {
     @GET("all")
-    suspend fun getAllInfoByAllCountry(): AllCovidInfoByCountries
+    suspend fun getAllInfoByAllCountry(): AllCovidInfo
 
     @GET("countries")
-    suspend fun getCountryName(): List<DetailCovidInfoByCountry>
+    suspend fun getCountryName(): List<CountryCovidInfo>
 }
 
 

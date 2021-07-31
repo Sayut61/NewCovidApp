@@ -2,15 +2,15 @@ package com.example.newcovidapp.ui.main.detail_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newcovidapp.data.DetailCovidInfoByCountry
+import com.example.newcovidapp.data.CountryCovidInfo
 import com.example.newcovidapp.datasource.service
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class FragmentCountryDetailViewModel: ViewModel() {
-    private val _detailCovidInfoByCountryLiveData = MutableLiveData<DetailCovidInfoByCountry>()
-    val detailCovidInfoByCountryLiveData: LiveData<DetailCovidInfoByCountry> = _detailCovidInfoByCountryLiveData
+    private val _detailCovidInfoByCountryLiveData = MutableLiveData<CountryCovidInfo>()
+    val detailCountryCovidInfoLiveData: LiveData<CountryCovidInfo> = _detailCovidInfoByCountryLiveData
 
     private val _progressBarLiveData = MutableLiveData<Boolean>()
     val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
