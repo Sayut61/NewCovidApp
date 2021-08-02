@@ -34,5 +34,6 @@ class CovidAdapter(val getAllNameCountryCovidInfos: List<CountryCovidInfo>, val 
 class CovidViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
     fun bind(countries: CountryCovidInfo){
         itemView.nameCountryTextView.text = countries.country
+        itemView.casesCountiesTextView.text = countries.cases.toString()
     }
 }

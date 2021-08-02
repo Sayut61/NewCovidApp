@@ -44,8 +44,7 @@ open class FragmentMainViewModel: ViewModel() {
 
     private fun prepareCountryInfoList(): List<CountryCovidInfo>{
         val  unfiltered = _countriesInfoFromApiLiveData.value
-        val filtered = unfiltered?.filter {
-            it.country.startsWith(filterTextLiveData.value?:"", true)
+        val filtered = unfiltered?.filter { it.country.startsWith(filterTextLiveData.value ?: "", true)
         } ?: emptyList()
         return when(sortTypeLiveData.value!!){
             SortType.BY_NAME -> filtered.sortedBy { it.country }
@@ -67,8 +66,8 @@ open class FragmentMainViewModel: ViewModel() {
             try {
                 val getAllInfoCovid: AllCovidInfo = service.getAllInfoByAllCountry()
                 _allCovidInfoLiveData.value = getAllInfoCovid
-                val getAllNameCountryCovidInfos: List<CountryCovidInfo> = service.getCountryName()
-                _countriesInfoFromApiLiveData.value = getAllNameCountryCovidInfos
+                val getAllNameCountryCovidInfo: List<CountryCovidInfo> = service.getCountryName()
+                _countriesInfoFromApiLiveData.value = getAllNameCountryCovidInfo
             }catch (ex: Exception){
                 _exceptionLiveData.value = ex
             }
