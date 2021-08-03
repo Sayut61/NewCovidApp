@@ -3,6 +3,7 @@ package com.example.newcovidapp.ui.main.main_activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -34,5 +35,4 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.top_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
-
 }

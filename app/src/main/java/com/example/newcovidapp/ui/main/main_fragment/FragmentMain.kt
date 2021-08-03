@@ -96,4 +96,12 @@ class FragmentMain : Fragment(), CovidAdapterListener {
             }
         })
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.refresh -> {
+                viewModel.refreshAllAndCountriesInfo()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

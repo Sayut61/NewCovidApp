@@ -61,7 +61,7 @@ class FragmentDetail : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.refresh -> {
-                viewModel.showDetailInfoByCountry(countryName = String())
+                viewModel.showDetailInfoByCountry(args.country)
             }
         }
         return super.onOptionsItemSelected(item)
