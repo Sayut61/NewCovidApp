@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class FragmentCountryDetailViewModel: ViewModel() {
+class DetailViewModel: ViewModel() {
     private val _detailCovidInfoByCountryLiveData = MutableLiveData<CountryCovidInfo>()
     val detailCountryCovidInfoLiveData: LiveData<CountryCovidInfo> = _detailCovidInfoByCountryLiveData
 

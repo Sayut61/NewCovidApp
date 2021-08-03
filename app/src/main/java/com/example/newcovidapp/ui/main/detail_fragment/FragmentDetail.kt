@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 
 class FragmentDetail : Fragment() {
     private val args: FragmentDetailArgs by navArgs()
-    private val viewModel: FragmentCountryDetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,11 +56,6 @@ class FragmentDetail : Fragment() {
     }
     fun hideProgressBar(){
         progressBar2.visibility = View.INVISIBLE
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

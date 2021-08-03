@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 
-open class FragmentMainViewModel: ViewModel() {
+open class MainViewModel: ViewModel() {
     private val _allCovidInfoLiveData = MutableLiveData<AllCovidInfo>()
     val allCovidInfoLiveData: LiveData<AllCovidInfo> = _allCovidInfoLiveData
 

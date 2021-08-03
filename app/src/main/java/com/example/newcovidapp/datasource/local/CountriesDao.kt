@@ -6,7 +6,6 @@ import com.example.newcovidapp.data.CountryCovidInfo
 
 @Dao
 interface CountriesDao {
-
     @Query("SELECT * FROM countriesInfo")
     fun getAllInfo(): List<CountryCovidInfo>
 
