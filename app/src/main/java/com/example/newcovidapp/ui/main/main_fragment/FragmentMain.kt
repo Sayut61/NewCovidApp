@@ -56,7 +56,7 @@ class FragmentMain : Fragment(), CovidAdapterListener {
         allDeathsTextView.text = "Смертей всего: ${getAllInfoCovid.deaths}"
         allTodayDeathsTextView.text = "Смертей всего: ${getAllInfoCovid.todayDeaths}"
         allRecoveredTextView.text = "Выздоравлений всего: ${getAllInfoCovid.recovered}"
-        allTodayRecoveredTextView.text = "Выздоравлений сегодня: ${getAllInfoCovid.todayRecovered}"
+        allTodayRecoveredTextView.text = "Выздоравлений сегодняz: ${getAllInfoCovid.todayRecovered}"
     }
 
     private fun showAllCountriesName(getAllNameCountryCovidInfos: List<CountryCovidInfo>) {
