@@ -16,5 +16,6 @@ class FragmentMap : Fragment(){
 
         val db = Room.databaseBuilder(requireContext(), CovidDB::class.java, "db").build()
         val covidInfoDao = db.countriesInfoDao()
+
     }
 }

@@ -18,7 +18,7 @@ import java.lang.Exception
 
 
 class FragmentMain : Fragment(), CovidAdapterListener {
-    private val viewModel: FragmentMainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -81,9 +81,8 @@ class FragmentMain : Fragment(), CovidAdapterListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.top_menu, menu)
+        inflater.inflate(R.menu.fragment_main_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-
         val searchMenuItem = menu.findItem(R.id.app_bar_search)
         val searchView = searchMenuItem.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -97,15 +96,4 @@ class FragmentMain : Fragment(), CovidAdapterListener {
             }
         })
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.refresh -> {
-                viewModel.refreshAllAndCountriesInfo()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-
 }

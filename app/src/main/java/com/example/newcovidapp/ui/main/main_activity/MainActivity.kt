@@ -3,16 +3,11 @@ package com.example.newcovidapp.ui.main.main_activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.newcovidapp.R
-import com.example.newcovidapp.ui.main.detail_fragment.FragmentDetail
-import com.example.newcovidapp.ui.main.main_fragment.FragmentMain
-import com.example.newcovidapp.ui.main.main_fragment.FragmentMainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -34,4 +29,10 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigationView.visibility = View.VISIBLE
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
 }
