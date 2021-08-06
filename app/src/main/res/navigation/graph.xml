@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph"
+    app:startDestination="@id/fragmentMain">
+
+    <fragment
+        android:id="@+id/fragmentMain"
+        android:name="com.example.newcovidapp.ui.main.main_fragment.FragmentMain"
+        android:label="Основная информация"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_fragmentMain_to_fragmentDetail"
+            app:destination="@id/fragmentDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentDetail"
+        android:name="com.example.newcovidapp.ui.main.detail_fragment.FragmentDetail"
+        android:label="Детальная информация"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="country"
+            app:argType="string" />
+        <argument
+            android:name="cases"
+            app:argType="long" />
+        <argument
+            android:name="todayCases"
+            app:argType="long" />
+        <argument
+            android:name="deaths"
+            app:argType="long" />
+        <argument
+            android:name="todayDeaths"
+            app:argType="long" />
+        <argument
+            android:name="recovered"
+            app:argType="long" />
+        <argument
+            android:name="todayRecovered"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentMap"
+        android:name="com.example.newcovidapp.ui.main.map_fragment.FragmentMap"
+        android:label="Мапа"
+        tools:layout="@layout/fragment_map" />
+</navigation>
