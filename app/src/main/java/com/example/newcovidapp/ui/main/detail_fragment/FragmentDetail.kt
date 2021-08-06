@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.newcovidapp.R
-import com.example.newcovidapp.data.DetailCovidInfoByCountry
+import com.example.newcovidapp.data.CountryCovidInfo
 import kotlinx.android.synthetic.main.fragment_detail.*
-import java.lang.reflect.Executable
 
 
 class FragmentDetail : Fragment() {
@@ -39,7 +38,7 @@ class FragmentDetail : Fragment() {
         }
     }
     @SuppressLint("SetTextI18n")
-    private fun showDetailInfoByCountry(country: DetailCovidInfoByCountry){
+    private fun showDetailInfoByCountry(country: CountryCovidInfo){
         detailNameCountryTextView.text = country.country
         detailCasesTextView.text = "Случаев всего: ${country.cases}"
         detailTodayCasesTextView.text = "Случаев сегодня: ${country.todayCases}"

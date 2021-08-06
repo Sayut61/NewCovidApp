@@ -2,21 +2,20 @@ package com.example.newcovidapp.ui.main.main_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newcovidapp.data.AllCovidInfoByCountries
-import com.example.newcovidapp.data.DetailCovidInfoByCountry
-import com.example.newcovidapp.datasource.service
+import com.example.newcovidapp.data.AllCovidInfo
+import com.example.newcovidapp.data.CountryCovidInfo
+import com.example.newcovidapp.datasource.RemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 
 open class FragmentMainViewModel: ViewModel() {
-    private val _allCovidInfoByCountryLiveData = MutableLiveData<AllCovidInfoByCountries>()
-    val allCovidInfoByCountryLiveData: LiveData<AllCovidInfoByCountries> = _allCovidInfoByCountryLiveData
+    private val _allCovidInfoByCountryLiveData = MutableLiveData<AllCovidInfo>()
+    val allCovidInfoByCountryLiveData: LiveData<AllCovidInfo> = _allCovidInfoByCountryLiveData
 
-    private val _countryNameLiveData = MutableLiveData<List<DetailCovidInfoByCountry>>()
-    val countryNameLiveData: LiveData<List<DetailCovidInfoByCountry>> = _countryNameLiveData
+    private val _countryNameLiveData = MutableLiveData<List<CountryCovidInfo>>()
+    val countryNameLiveData: LiveData<List<CountryCovidInfo>> = _countryNameLiveData
 
     private val _exceptionLiveData = MutableLiveData<Exception>()
     val exceptionLiveData: LiveData<Exception> = _exceptionLiveData
@@ -28,9 +27,9 @@ open class FragmentMainViewModel: ViewModel() {
         GlobalScope.launch(Dispatchers.Main){
             _progressBarLiveData.value = true
             try {
-                val getAllInfoCovid: AllCovidInfoByCountries = service.getAllInfoByAllCountry()
+                val getAllInfoCovid = RemoteDataSource.getAllCovidInfo()
                 _allCovidInfoByCountryLiveData.value = getAllInfoCovid
-                val getAllNameCountries: List<DetailCovidInfoByCountry> = service.getCountryName()
+                val getAllNameCountries = RemoteDataSource.getCountriesInfo()
                 _countryNameLiveData.value = getAllNameCountries
             }catch (ex: Exception){
                 _exceptionLiveData.value = ex

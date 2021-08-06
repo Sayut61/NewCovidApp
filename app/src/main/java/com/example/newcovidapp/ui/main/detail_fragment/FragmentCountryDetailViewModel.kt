@@ -2,15 +2,16 @@ package com.example.newcovidapp.ui.main.detail_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.newcovidapp.data.DetailCovidInfoByCountry
-import com.example.newcovidapp.datasource.service
+import com.example.newcovidapp.data.AllCovidInfo
+import com.example.newcovidapp.data.CountryCovidInfo
+import com.example.newcovidapp.datasource.RemoteDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class FragmentCountryDetailViewModel: ViewModel() {
-    private val _detailCovidInfoByCountryLiveData = MutableLiveData<DetailCovidInfoByCountry>()
-    val detailCovidInfoByCountryLiveData: LiveData<DetailCovidInfoByCountry> = _detailCovidInfoByCountryLiveData
+    private val _detailCovidInfoByCountryLiveData = MutableLiveData<CountryCovidInfo>()
+    val detailCovidInfoByCountryLiveData: LiveData<CountryCovidInfo> = _detailCovidInfoByCountryLiveData
 
     private val _progressBarLiveData = MutableLiveData<Boolean>()
     val progressBarLiveData: LiveData<Boolean> = _progressBarLiveData
@@ -22,7 +23,7 @@ class FragmentCountryDetailViewModel: ViewModel() {
         GlobalScope.launch(Dispatchers.Main) {
             _progressBarLiveData.value = true
             try {
-                val countries = service.getCountryName()
+                val countries = RemoteDataSource.getCountriesInfo()
                 val country = countries.find { it.country == countryName }!!
                 _detailCovidInfoByCountryLiveData.value = country
             }catch (ex: Exception){
